@@ -28,6 +28,21 @@ var albumMarconi = {
     ]
 };
 
+var albumKlimt = {
+    title: 'The Kiss',
+    artist: 'Gustav Klimt',
+    label: 'Symbolism',
+    year: '1907',
+    albumArtUrl: 'assets/images/album_covers/13.png',
+    songs: [
+        { title: 'ABC', duration: '2:04' },
+        { title: 'DEF', duration: '3:01' },
+        { title: 'GHI', duration: '5:28'},
+        { title: 'JKL', duration: '4:37' },
+        { title: 'MNOP', duration: '2:44'}
+    ]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -40,12 +55,13 @@ var createSongRow = function(songNumber, songName, songLength) {
      return template;
  };
 
+ var albumTitle = document.getElementsByClassName('album-view-title')[0];
+ var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+ var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+ var albumImage = document.getElementsByClassName('album-cover-art')[0];
+ var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
 var setCurrentAlbum = function(album) {
-    var albumTitle = document.getElementsByClassName('album-view-title')[0];
-    var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-    var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
-    var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
@@ -61,4 +77,14 @@ var setCurrentAlbum = function(album) {
 
  window.onload = function() {
     setCurrentAlbum(albumPicasso);
+
+    var albums = [albumPicasso, albumMarconi, albumKlimt];
+    var i = 0;
+    albumImage.addEventListener("click", function(event){
+      setCurrentAlbum(albums[i]);
+      i += 1
+
+      if (i == albums.length)
+        i = 0;
+    });
  };
