@@ -104,6 +104,21 @@ var createSongRow = function(songNumber, songName, songLength) {
      return $row;
  };
 
+ var togglePlayFromPlayerBar = function() {
+ // if current sound is paused then play
+ // else if current sound is playing then pause
+   var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+   if (currentSoundFile.isPaused()) {
+     currentSoundFile.play();
+     $('.main-controls .play-pause').html(playerBarPauseButton);
+     currentlyPlayingCell.html(pauseButtonTemplate);
+   } else {
+     currentSoundFile.pause();
+     $('.main-controls .play-pause').html(playerBarPlayButton);
+     currentlyPlayingCell.html(playButtonTemplate);
+   }
+ }
+
 var $albumTitle = $('.album-view-title');
 var $albumArtist = $('.album-view-artist');
 var $albumReleaseInfo = $('.album-view-release-info');
@@ -286,12 +301,14 @@ var currentVolume = 80;
 
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playPauseButton = $('.main-controls .play-pause');
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
     setupSeekBars();
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
+    $playPauseButton.click(togglePlayFromPlayerBar);
 
     // var albums = [albumPicasso, albumMarconi, albumKlimt];
     // var i = 1;
